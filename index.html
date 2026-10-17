@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f8f6ef" />
+  <meta name="description" content="Study Garden 學習花園：在專注與日常任務中，讓努力慢慢開花。" />
+  <title>Study Garden｜讓努力慢慢開花</title>
+  <style>
+    :root {
+      --bg: #f8f6ef;
+      --paper: #fffdf8;
+      --paper-warm: #fdf8ee;
+      --sage: #78977e;
+      --sage-deep: #4f735b;
+      --sage-soft: #e6efe3;
+      --sage-mist: #f0f5eb;
+      --ink: #45564a;
+      --text: #60645c;
+      --muted: #899287;
+      --border: #e5e7d9;
+      --rose: #dda7a3;
+      --rose-soft: #f6e4df;
+      --sand: #f5e7c7;
+      --sun: #e6ba68;
+      --shadow: 0 13px 34px rgba(76, 87, 64, .065);
+      --round: 23px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; color: var(--ink); background: var(--bg);
+      font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Segoe UI', sans-serif;
+      line-height: 1.6;
+    }
+    body::before {
+      content: ''; pointer-events: none; position: fixed; inset: 0; z-index: -1;
+      background-image: radial-gradient(#bcbea65e .55px, transparent .8px);
+      background-size: 17px 17px; opacity: .33;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .48; }
+    button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+      outline: 3px solid #b9a4d0; outline-offset: 3px;
+    }
+    a { color: inherit; }
+    .shell { width: min(1180px, calc(100% - 48px)); margin: auto; }
+    .site-header { padding: 28px 0 20px; display: flex; gap: 24px; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-symbol { width: 48px; height: 48px; flex: none; background: #e7eee3; border-radius: 15px; display: grid; place-items: center; transform: rotate(-4deg); }
+    .brand-name { display: block; font: bold 24px/1.15 Georgia, 'Noto Serif TC', serif; letter-spacing: -.6px; color: #4c6a51; }
+    .brand-sub { display: block; font-size: 11px; color: var(--muted); letter-spacing: 3px; margin-top: 4px; }
+    .site-nav { display: flex; align-items: center; gap: 25px; color: #687866; font-size: 13px; font-weight: 650; }
+    .site-nav a { text-decoration: none; border-bottom: 2px solid transparent; padding-bottom: 4px; }
+    .site-nav a:hover { border-color: var(--sage); }
+    .nav-date { background: var(--paper); border: 1px solid var(--border); border-radius: 999px; padding: 8px 13px; color: var(--sage-deep); white-space: nowrap; }
+    .hero { position: relative; min-height: 220px; background: #edf1e5; border: 1px solid #e0e8d9; border-radius: 29px; padding: 35px 46px; overflow: hidden; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow); }
+    .hero::before { content: ''; position: absolute; width: 390px; height: 390px; background: #f6f3de; border-radius: 50%; right: -85px; bottom: -254px; opacity: .9; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 2.7px; font-size: 11px; font-weight: 800; color: #88a18a; display: flex; align-items: center; gap: 7px; }
+    .eyebrow::before { content: ''; width: 20px; border-top: 2px solid #aac3a8; }
+    .hero h1 { font-family: Georgia, 'Noto Serif TC', 'Songti TC', serif; font-size: clamp(29px, 4vw, 43px); line-height: 1.32; letter-spacing: 1px; font-weight: 600; margin: 12px 0 10px; color: #527257; }
+    .hero p { font-size: 14px; color: #718072; margin: 0; max-width: 480px; }
+    .hero-sparkle { display: inline-block; margin-top: 18px; border-radius: 99px; background: #fffdf8b9; padding: 7px 14px; color: #7c8c76; font-size: 12px; }
+    .hero-art { width: 260px; max-width: 36%; position: relative; z-index: 1; transform: rotate(1deg); }
+    .layout { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(340px, .92fr); gap: 22px; margin-top: 24px; }
+    .panel { background: var(--paper); border: 1px solid var(--border); border-radius: var(--round); box-shadow: var(--shadow); padding: 25px 27px; }
+    .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+    .panel-title { display: flex; align-items: center; gap: 10px; margin: 0; font-family: 'Noto Serif TC', 'Songti TC', Georgia, serif; font-size: 22px; font-weight: 700; letter-spacing: .4px; }
+    .section-icon { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 11px; background: var(--sage-soft); color: var(--sage-deep); }
+    .section-caption { font-size: 12px; color: var(--muted); margin: 5px 0 0 45px; }
+    .soft-pill { display: inline-flex; align-items: center; gap: 5px; background: var(--sage-mist); color: var(--sage-deep); font-size: 12px; font-weight: 650; border-radius: 99px; padding: 6px 10px; white-space: nowrap; }
+    .task-form { display: grid; grid-template-columns: minmax(0,1fr) 104px 76px; gap: 8px; }
+    .field { border: 1px solid #e2e5d9; background: #fbfbf6; border-radius: 12px; min-width: 0; color: var(--ink); padding: 11px 13px; font-size: 13px; outline: none; }
+    .field::placeholder { color: #a5aa9f; }
+    .field:focus { border-color: #91ac95; background: white; }
+    .primary-btn { border: 0; border-radius: 12px; background: var(--sage); color: white; font-size: 13px; font-weight: 750; padding: 10px 14px; transition: background .15s ease, transform .15s ease; }
+    .primary-btn:hover:not(:disabled) { background: #66896e; transform: translateY(-1px); }
+    .task-progress { display: flex; gap: 9px; align-items: center; margin: 22px 0 11px; justify-content: space-between; font-size: 12px; color: var(--muted); }
+    .task-progress strong { color: var(--sage-deep); font-size: 13px; }
+    .progress-track { height: 9px; border-radius: 999px; background: #ebeee5; overflow: hidden; }
+    .progress-fill { width: 0%; height: 100%; border-radius: 99px; background: #9ab79b; transition: width .45s ease; }
+    .filters { display: flex; gap: 7px; margin: 22px 0 10px; }
+    .filter { padding: 5px 12px; border: 1px solid transparent; border-radius: 99px; background: transparent; color: #8b9286; font-size: 12px; }
+    .filter.active { background: var(--sage-soft); color: var(--sage-deep); font-weight: 750; }
+    .task-list { padding: 0; margin: 0; list-style: none; min-height: 158px; max-height: 330px; overflow-y: auto; }
+    .task { display: flex; align-items: center; gap: 11px; padding: 12px 4px; border-bottom: 1px dashed #e9e9e1; animation: rise .2s ease both; }
+    .task:last-child { border-bottom: 0; }
+    .task-toggle { flex: none; width: 23px; height: 23px; border: 1.7px solid #b0c3ae; background: #fffefa; color: white; display: grid; place-items: center; border-radius: 8px; padding: 0; }
+    .task.is-done .task-toggle { background: #94b49b; border-color: #94b49b; }
+    .task-name { min-width: 0; overflow-wrap: anywhere; font-size: 13px; font-weight: 650; color: #536653; }
+    .task.is-done .task-name { text-decoration: line-through; text-decoration-color: #b1b8ac; color: #a2a99c; }
+    .task-category { flex: none; border-radius: 99px; background: #f3eee4; color: #a09279; font-size: 11px; padding: 2px 8px; }
+    .task-body { flex: 1; min-width: 0; }
+    .task-actions { display: flex; gap: 3px; }
+    .icon-btn { background: transparent; border: 0; border-radius: 9px; color: #a3afa2; width: 28px; height: 28px; padding: 5px; display: grid; place-items: center; }
+    .icon-btn:hover { background: #f6e6e1; color: #b67973; }
+    .empty { padding: 30px 12px; text-align: center; color: var(--muted); font-size: 13px; }
+    .empty-flower { font-size: 35px; margin-bottom: 8px; }
+    .task-footer { padding-top: 14px; border-top: 1px solid #f0f0e9; display: flex; justify-content: space-between; gap: 10px; align-items: center; color: var(--muted); font-size: 11px; }
+    .text-btn { border: 0; background: transparent; color: #77927b; text-decoration: underline; text-underline-offset: 3px; font-size: 12px; }
+    .text-btn:hover { color: var(--sage-deep); }
+    .timer-panel { background: linear-gradient(165deg, #fffdfa, #fbfaf3); }
+    .timer-modes { margin: -1px auto 11px; background: #f0f2e8; border-radius: 999px; padding: 4px; display: flex; width: fit-content; }
+    .mode-btn { border: none; background: transparent; color: #8e9c8c; font-size: 12px; font-weight: 700; border-radius: 99px; padding: 7px 22px; }
+    .mode-btn.active { background: var(--paper); color: #587a5c; box-shadow: 0 2px 7px #73816e18; }
+    .timer-ring { --progress: 100%; position: relative; width: 207px; height: 207px; margin: 12px auto 17px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(#8eae92 var(--progress), #e8ebdf 0); }
+    .timer-ring::after { content: ''; position: absolute; inset: 11px; background: #fffdf8; border-radius: 50%; }
+    .timer-inner { position: relative; z-index: 1; text-align: center; }
+    .timer-decoration { color: #a8c0a8; font-size: 20px; display: block; }
+    .timer-count { font: 600 48px/1.15 Georgia, serif; color: #57785c; letter-spacing: 1px; font-variant-numeric: tabular-nums; display: block; }
+    .timer-label { color: #97a393; font-size: 11px; letter-spacing: 1px; }
+    .timer-caption { text-align: center; color: var(--muted); font-size: 12px; margin: 0 0 15px; }
+    .timer-presets { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 5px auto 14px; }
+    .timer-presets span { color: var(--muted); font-size: 11px; margin-right: 3px; }
+    .preset { border-radius: 99px; border: 1px solid #e2e6da; background: #fffefa; color: #849183; padding: 4px 9px; font-size: 11px; }
+    .preset.selected { background: #e7efe4; border-color: #bed2ba; color: #55765b; font-weight: 750; }
+    .timer-actions { display: flex; justify-content: center; align-items: center; gap: 9px; }
+    .timer-main { min-width: 140px; border-radius: 99px; padding: 11px 23px; }
+    .secondary-btn { border: 1px solid #d9e2d4; border-radius: 99px; background: #fcfdf8; color: #708a73; padding: 10px 14px; font-size: 13px; }
+    .secondary-btn:hover { background: var(--sage-mist); }
+    .timer-note { margin: 16px 0 0; text-align: center; font-size: 11px; color: #9aa497; }
+    .garden-panel { margin-top: 22px; display: grid; grid-template-columns: minmax(0,1fr) 240px; gap: 24px; align-items: center; background: #fdfcf5; }
+    .garden-visual { position: relative; border-radius: 20px; min-height: 328px; background: linear-gradient(#f1f4e9,#f5f4e9); overflow: hidden; display: grid; place-items: center; }
+    .garden-visual::after { content: ''; position: absolute; bottom: -90px; left: -20%; width: 140%; height: 135px; background: #e8eddd; border-radius: 50% 50% 0 0; }
+    .garden-label { position: absolute; top: 17px; left: 18px; z-index: 2; font-size: 11px; color: #7e987e; letter-spacing: 1.2px; }
+    .sun-counter { position: absolute; z-index: 2; right: 14px; top: 12px; background: #fffaf1dc; color: #9b7e45; font-weight: 750; font-size: 13px; border: 1px solid #f0e8d7; border-radius: 99px; padding: 6px 13px; }
+    .plant-svg { width: 100%; max-width: 470px; height: 300px; z-index: 1; position: relative; overflow: visible; }
+    .plant-stage:not([hidden]) { animation: plant-pop .55s ease both; transform-origin: 50% 80%; }
+    .petal { transform-origin: 260px 95px; animation: float 4.5s ease-in-out infinite; }
+    .garden-detail { padding: 10px 9px 10px 0; }
+    .level-label { display: block; font-size: 12px; color: #a1a993; letter-spacing: 1.4px; font-weight: 700; }
+    .level-name { margin: 7px 0 9px; font-family: Georgia, 'Noto Serif TC', 'Songti TC', serif; font-size: 30px; font-weight: 650; color: #5f7e65; }
+    .level-description { color: #858e81; font-size: 13px; min-height: 61px; }
+    .sun-track { height: 9px; background: #edf0e5; border-radius: 99px; overflow: hidden; margin-top: 24px; }
+    .sun-fill { height: 100%; background: linear-gradient(90deg, #ddc28f, #e9b96d); width: 0%; border-radius: 99px; transition: width .35s ease; }
+    .sun-meta { display: flex; justify-content: space-between; color: #a6a18d; font-size: 11px; padding-top: 8px; }
+    .stats-panel { margin-top: 22px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 13px; }
+    .stat { padding: 20px 14px; background: #f7f8f2; border: 1px solid #eef0e8; border-radius: 17px; text-align: center; }
+    .stat small { color: #939c8b; display: block; font-size: 11px; letter-spacing: .5px; }
+    .stat strong { display: block; color: #608168; font: 650 30px/1.8 Georgia, serif; }
+    .stat .unit { color: #a3ab9d; font-size: 11px; margin-left: 3px; }
+    .history-panel { margin: 22px 0 0; }
+    .history-heading { margin-bottom: 14px; }
+    .history-grid { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 9px; }
+    .history-day { border: 1px solid #ecede4; border-radius: 12px; background: #fafbf6; min-width: 0; padding: 10px 5px 9px; color: #879488; display: grid; gap: 7px; justify-items: center; }
+    .history-day:hover { background: #f0f4eb; }
+    .history-day.selected { background: #e9f1e6; color: #527357; border-color: #b9d0ba; }
+    .history-day .week { font-size: 11px; }
+    .history-day .day { font: 600 16px Georgia,serif; }
+    .history-day .mark { height: 6px; width: 6px; background: #d3dbcb; border-radius: 99px; }
+    .history-day.has-activity .mark { background: #e0b674; }
+    .history-detail { background: #f8f9f2; border: 1px dashed #e6e9dc; padding: 12px 15px; border-radius: 13px; margin-top: 13px; color: #829181; font-size: 12px; }
+    .bottom { display: flex; justify-content: space-between; gap: 20px; align-items: center; flex-wrap: wrap; padding: 23px 0 34px; color: #a1a797; font-size: 11px; }
+    .bottom-actions { display: flex; gap: 13px; align-items: center; }
+    .bottom-actions button { border: 0; color: #819583; background: transparent; text-decoration: underline; text-underline-offset: 3px; font-size: 11px; padding: 4px; }
+    .toast { position: fixed; z-index: 100; bottom: 25px; left: 50%; transform: translate(-50%, 120px); opacity: 0; pointer-events: none; max-width: calc(100% - 30px); border-radius: 99px; padding: 12px 22px; background: #566f58; color: white; box-shadow: 0 10px 32px #4c65523b; font-size: 13px; text-align: center; transition: transform .25s ease,opacity .25s ease; }
+    .toast.show { transform: translate(-50%, 0); opacity: 1; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    [hidden] { display: none !important; }
+    @keyframes rise { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes plant-pop { from { opacity: .4; transform: scale(.91); } to { opacity: 1; transform: scale(1); } }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-3px) rotate(1deg); } }
+    @media (min-width: 900px) { .task-panel, .timer-panel { min-height: 487px; } }
+    @media (max-width: 850px) {
+      .layout { grid-template-columns: 1fr; }
+      .garden-panel { grid-template-columns: minmax(0,1fr) minmax(180px, .5fr); }
+      .hero { padding: 30px; }
+      .hero-art { width: 220px; }
+    }
+    @media (max-width: 610px) {
+      .shell { width: min(100% - 28px, 470px); }
+      .site-header { padding-top: 17px; gap: 8px; flex-wrap: wrap; }
+      .brand-symbol { width: 41px; height: 41px; }
+      .brand-name { font-size: 20px; }
+      .site-nav { gap: 12px; font-size: 11px; }
+      .nav-date { display: none; }
+      .hero { padding: 27px 24px; min-height: 203px; }
+      .hero-art { position: absolute; width: 155px; max-width: none; right: -25px; bottom: -20px; opacity: .32; }
+      .hero h1 { font-size: 32px; position: relative; z-index: 1; }
+      .hero p { max-width: 260px; font-size: 12px; position: relative; z-index: 1; }
+      .hero-sparkle { position: relative; z-index: 1; font-size: 11px; }
+      .panel { padding: 21px 18px; }
+      .panel-title { font-size: 20px; }
+      .task-form { grid-template-columns: 1fr 92px; }
+      .task-form .primary-btn { grid-column: 1 / -1; }
+      .task-category { display: none; }
+      .garden-panel { grid-template-columns: 1fr; gap: 14px; }
+      .garden-visual { min-height: 270px; }
+      .plant-svg { height: 260px; }
+      .garden-detail { padding: 0 6px 5px; }
+      .level-description { min-height: auto; }
+      .sun-track { margin-top: 14px; }
+      .stats-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .history-grid { gap: 4px; }
+      .history-day { padding: 9px 1px; }
+      .bottom { padding-bottom: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration: .01ms !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="site-header">
+      <a href="#top" class="brand" aria-label="Study Garden 首頁">
+        <span class="brand-symbol" aria-hidden="true">
+          <svg width="33" height="33" viewBox="0 0 40 40" fill="none">
+            <path d="M20 30V17" stroke="#638B68" stroke-width="2.3" stroke-linecap="round"/>
+            <path d="M20 26C11 26 10 20 10 18C17 17 21 21 20 26Z" fill="#93B69A"/>
+            <path d="M20 21C29 21 30 14 30 12C23 12 19 16 20 21Z" fill="#83AA8E"/>
+            <path d="M13 31Q20 29 27 31" stroke="#AC8C77" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="20" cy="10" r="3" fill="#E0ACAA"/><circle cx="20" cy="10" r="1" fill="#F8E0AC"/>
+          </svg>
+        </span>
+        <span><span class="brand-name">Study Garden</span><span class="brand-sub">學 習 花 園</span></span>
+      </a>
+      <nav class="site-nav" aria-label="頁面導覽">
+        <a href="#tasks">今日計畫</a><a href="#garden">我的花園</a><a href="#history">學習紀錄</a>
+      </nav>
+      <span class="nav-date" id="headerDate"></span>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="heroTitle">
+        <div>
+          <div class="eyebrow">A LITTLE GROWTH EVERY DAY</div>
+          <h1 id="heroTitle">讓每一份努力，<br />都慢慢開花。</h1>
+          <p>種下今天的小目標，在專注與完成之間，培養自己的學習花園。</p>
+          <span class="hero-sparkle" id="greeting">今天也為自己留一點成長的時間 ♡</span>
+        </div>
+        <svg class="hero-art" viewBox="0 0 270 185" fill="none" aria-hidden="true">
+          <ellipse cx="136" cy="164" rx="114" ry="15" fill="#DCE7D3"/>
+          <path d="M101 128 Q136 135 171 128L164 167Q137 178 111 166Z" fill="#CBA58C" stroke="#B78D79" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M136 130C135 104 136 70 145 48" stroke="#638F70" stroke-width="5" stroke-linecap="round"/>
+          <path d="M137 113Q98 104 111 81Q135 84 137 113Z" fill="#A0BFA0" stroke="#7FA681" stroke-width="1.8"/>
+          <path d="M138 93Q174 86 166 61Q142 64 138 93Z" fill="#8AAE91" stroke="#759F7C" stroke-width="1.8"/>
+          <g fill="#ECC6BE" stroke="#DDAEAA" stroke-width="1.8">
+            <ellipse cx="145" cy="32" rx="10" ry="19"/><ellipse cx="145" cy="32" rx="10" ry="19" transform="rotate(72 145 49)"/><ellipse cx="145" cy="32" rx="10" ry="19" transform="rotate(144 145 49)"/><ellipse cx="145" cy="32" rx="10" ry="19" transform="rotate(216 145 49)"/><ellipse cx="145" cy="32" rx="10" ry="19" transform="rotate(288 145 49)"/>
+          </g><circle cx="145" cy="49" r="9" fill="#F3DC9F"/>
+          <path d="M46 146Q42 126 46 111M45 133Q29 120 31 112Q44 113 45 133ZM46 122Q62 109 62 101Q44 104 46 122Z" fill="#9CB89F" stroke="#789A7E" stroke-width="2" stroke-linecap="round"/>
+          <path d="M210 149Q204 119 217 99M214 120Q194 118 195 104Q211 108 214 120ZM210 137Q230 122 236 122Q230 141 210 137Z" fill="#AFC7A6" stroke="#84A18A" stroke-width="2"/>
+          <path d="M50 39L55 31M229 61L238 58M221 31L218 22" stroke="#E1B86F" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="211" cy="57" r="3" fill="#E3B8A6"/><circle cx="75" cy="65" r="3" fill="#E3B8A6"/>
+        </svg>
+      </section>
+
+      <div class="layout">
+        <section class="panel task-panel" id="tasks" aria-labelledby="tasksTitle">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title" id="tasksTitle"><span class="section-icon" aria-hidden="true">✎</span> 今日待辦</h2>
+              <p class="section-caption">把大目標拆成一件件小事。</p>
+            </div>
+            <span class="soft-pill" id="tasksCount">0 項待完成</span>
+          </div>
+          <form class="task-form" id="taskForm">
+            <label for="taskInput" class="sr-only">任務內容</label>
+            <input id="taskInput" class="field" maxlength="90" required autocomplete="off" placeholder="今天想完成什麼呢？" />
+            <label for="taskCategory" class="sr-only">任務分類</label>
+            <select class="field" id="taskCategory"><option>課業</option><option>閱讀</option><option>語言</option><option>其他</option></select>
+            <button class="primary-btn" type="submit">＋ 新增</button>
+          </form>
+          <div class="task-progress"><span>今日完成進度</span><strong id="progressText">0 / 0 項</strong></div>
+          <div class="progress-track" role="progressbar" aria-label="今日任務完成率" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="taskProgressBar"><div class="progress-fill" id="taskProgressFill"></div></div>
+          <div class="filters" aria-label="篩選任務">
+            <button class="filter active" type="button" data-filter="all" aria-pressed="true">全部</button>
+            <button class="filter" type="button" data-filter="todo" aria-pressed="false">未完成</button>
+            <button class="filter" type="button" data-filter="done" aria-pressed="false">已完成</button>
+          </div>
+          <ul class="task-list" id="taskList" aria-label="今日待辦清單"></ul>
+          <div class="task-footer"><span>完成一項任務 ☀ +1 陽光值</span><button type="button" class="text-btn" id="clearCompleted">清除已完成</button></div>
+        </section>
+
+        <section class="panel timer-panel" aria-labelledby="timerTitle">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title" id="timerTitle"><span class="section-icon" aria-hidden="true">◷</span> 專注時光</h2>
+              <p class="section-caption">用一段安靜的時間，照顧自己的節奏。</p>
+            </div>
+            <span class="soft-pill">POMODORO</span>
+          </div>
+          <div class="timer-modes" aria-label="計時模式">
+            <button class="mode-btn active" data-mode="focus" type="button" aria-pressed="true">專注時間</button>
+            <button class="mode-btn" data-mode="break" type="button" aria-pressed="false">休息一下</button>
+          </div>
+          <div class="timer-ring" id="timerRing" role="timer" aria-label="專注倒數計時">
+            <div class="timer-inner"><span class="timer-decoration" aria-hidden="true">✿</span><span id="timerDisplay" class="timer-count">25:00</span><span id="timerStateLabel" class="timer-label">準備好就開始吧</span></div>
+          </div>
+          <p class="timer-caption" id="timerCaption">每一分鐘的專注，都是成長的養分。</p>
+          <div class="timer-presets" id="timerPresets" aria-label="專注時長">
+            <span>專注長度</span>
+            <button type="button" data-minutes="1" class="preset">1 分</button>
+            <button type="button" data-minutes="15" class="preset">15 分</button>
+            <button type="button" data-minutes="25" class="preset selected">25 分</button>
+            <button type="button" data-minutes="45" class="preset">45 分</button>
+          </div>
+          <div class="timer-actions">
+            <button type="button" id="timerStart" class="primary-btn timer-main">▶ 開始專注</button>
+            <button type="button" id="timerReset" class="secondary-btn">↺ 重設</button>
+          </div>
+          <p class="timer-note">完成一輪專注 ☀ +2　·　1 分鐘模式也能用來測試</p>
+        </section>
+      </div>
+
+      <section class="panel garden-panel" id="garden" aria-labelledby="gardenTitle">
+        <div class="garden-visual">
+          <span class="garden-label">MY LITTLE GARDEN</span>
+          <span class="sun-counter">☀ <span id="sunNumber">0</span> 陽光值</span>
+          <svg class="plant-svg" viewBox="0 0 520 300" role="img" aria-labelledby="gardenTitle plantDesc">
+            <desc id="plantDesc">隨著完成任務與專注時光成長的虛擬植物。</desc>
+            <ellipse cx="260" cy="260" rx="138" ry="17" fill="#CFDDC8" opacity=".7" />
+            <path d="M94 245Q88 220 102 197M98 217Q75 216 74 195Q98 195 98 217ZM96 235Q122 221 124 206Q104 208 96 235Z" fill="#B3CAA8" stroke="#93B095" stroke-width="2.1" stroke-linecap="round"/>
+            <path d="M409 252Q427 229 412 196M414 217Q395 201 390 182Q413 185 414 217ZM416 232Q434 210 448 211Q443 231 416 232Z" fill="#B3CAA8" stroke="#93B095" stroke-width="2.1" stroke-linecap="round"/>
+            <circle cx="119" cy="102" r="3.5" fill="#E6CAB5"/><circle cx="403" cy="103" r="4" fill="#F0D7B0"/>
+            <g data-stage="0" class="plant-stage"><ellipse cx="260" cy="228" rx="15" ry="9" transform="rotate(-26 260 228)" fill="#9E7F59"/><path d="M252 229L267 223" stroke="#73583E" stroke-width="1.7" stroke-linecap="round"/></g>
+            <g data-stage="1" class="plant-stage" hidden>
+              <path d="M260 241Q255 211 260 167" stroke="#729776" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M260 210Q219 206 217 179Q248 179 260 210Z" fill="#9FBC9A" stroke="#7DA583" stroke-width="2"/>
+              <path d="M259 193Q300 183 299 155Q270 163 259 193Z" fill="#83AE8C" stroke="#709C79" stroke-width="2"/>
+            </g>
+            <g data-stage="2" class="plant-stage" hidden>
+              <path d="M260 240Q252 183 267 109" stroke="#729776" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M256 196Q208 185 211 157Q247 158 256 196Z" fill="#99BB99" stroke="#7DA583" stroke-width="2"/>
+              <path d="M262 160Q310 151 308 118Q278 122 262 160Z" fill="#86AC88" stroke="#709C79" stroke-width="2"/>
+              <path d="M258 225Q225 223 225 201Q251 201 258 225Z" fill="#A9C4A1" stroke="#86A587" stroke-width="2"/>
+              <path d="M264 123Q249 112 252 96" stroke="#729776" stroke-width="5" fill="none" stroke-linecap="round"/>
+            </g>
+            <g data-stage="3" class="plant-stage" hidden>
+              <path d="M260 240Q253 177 260 106" stroke="#729776" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M256 190Q206 184 211 150Q246 154 256 190Z" fill="#99BB99" stroke="#7DA583" stroke-width="2"/>
+              <path d="M262 169Q316 156 308 127Q279 130 262 169Z" fill="#86AC88" stroke="#709C79" stroke-width="2"/>
+              <path d="M258 219Q228 213 227 194Q254 194 258 219Z" fill="#A9C4A1" stroke="#86A587" stroke-width="2"/>
+              <g class="petal" fill="#E8ACAE" stroke="#CE979B" stroke-width="2">
+                <ellipse cx="260" cy="72" rx="20" ry="34"/><ellipse cx="260" cy="72" rx="20" ry="34" transform="rotate(72 260 95)"/><ellipse cx="260" cy="72" rx="20" ry="34" transform="rotate(144 260 95)"/><ellipse cx="260" cy="72" rx="20" ry="34" transform="rotate(216 260 95)"/><ellipse cx="260" cy="72" rx="20" ry="34" transform="rotate(288 260 95)"/>
+              </g><circle cx="260" cy="95" r="21" fill="#F3D9A0" stroke="#E5C78A" stroke-width="2"/>
+              <circle cx="253" cy="91" r="1.9" fill="#977F5B"/><circle cx="267" cy="91" r="1.9" fill="#977F5B"/><path d="M253 100Q260 107 267 100" stroke="#977F5B" fill="none" stroke-linecap="round" stroke-width="1.8"/>
+              <path d="M196 95l-4 7M324 81l6-4" stroke="#E7BC83" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+            <path d="M198 237Q258 231 322 237L307 263Q260 278 214 263Z" fill="#C79E85" stroke="#AA816E" stroke-width="2.4" stroke-linejoin="round" />
+            <ellipse cx="260" cy="237" rx="63" ry="11" fill="#B68E78"/><ellipse cx="260" cy="235" rx="57" ry="7" fill="#91725D"/>
+            <path d="M198 236Q260 245 322 236L318 244Q261 253 202 244Z" fill="#DBB5A0" stroke="#B38A79" stroke-width="1.8"/>
+            <path d="M238 255Q259 260 282 256" stroke="#DFB8A3" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="garden-detail">
+          <h2 class="panel-title" id="gardenTitle"><span class="section-icon" aria-hidden="true">❀</span> 我的花園</h2>
+          <p class="section-caption" style="margin-bottom:19px">一起見證今天的小小進步。</p>
+          <span class="level-label" id="levelLabel">LEVEL 01</span>
+          <h3 class="level-name" id="levelName">等待發芽的種子</h3>
+          <p class="level-description" id="levelDescription">每一個小小的開始，都值得被溫柔對待。</p>
+          <div class="sun-track" aria-label="植物成長進度"><div class="sun-fill" id="sunFill"></div></div>
+          <div class="sun-meta"><span id="sunHint">再收集 2 點陽光就能發芽</span><span id="sunRatio">0 / 6</span></div>
+        </div>
+      </section>
+
+      <section class="panel stats-panel" aria-labelledby="statsTitle">
+        <div class="panel-head"><div><h2 class="panel-title" id="statsTitle"><span class="section-icon" aria-hidden="true">☼</span> 今日學習成果</h2><p class="section-caption">你的每一點努力，都有被好好記錄。</p></div></div>
+        <div class="stats-grid">
+          <div class="stat"><small>已完成任務</small><strong id="statTasks">0</strong><small>件</small></div>
+          <div class="stat"><small>完成率</small><strong id="statPercent">0%</strong><small>今日目標</small></div>
+          <div class="stat"><small>專注時間</small><strong id="statMinutes">0</strong><small>分鐘</small></div>
+          <div class="stat"><small>完成專注</small><strong id="statSessions">0</strong><small>輪</small></div>
+        </div>
+      </section>
+
+      <section class="panel history-panel" id="history" aria-labelledby="historyTitle">
+        <div class="panel-head history-heading"><div><h2 class="panel-title" id="historyTitle"><span class="section-icon" aria-hidden="true">▤</span> 近七日的足跡</h2><p class="section-caption">回頭看看，你已經走了多遠。</p></div><span class="soft-pill">最近 7 天</span></div>
+        <div class="history-grid" id="historyGrid" aria-label="近七日學習紀錄"></div>
+        <div class="history-detail" id="historyDetail" aria-live="polite">點選日期，看看當天的學習成果。</div>
+      </section>
+    </main>
+    <footer class="bottom"><span>✿ Study Garden — grow at your own pace.　為自己慢慢變好的日子留一個角落。</span><span class="bottom-actions"><button type="button" id="exportData">匯出紀錄</button><button type="button" id="clearData">清除所有資料</button></span></footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+  (() => {
+    'use strict';
+    const KEY = 'study-garden-data-v1';
+    const DAY_MS = 86400000;
+    const modes = { focus: '專注', break: '休息' };
+    const stages = [
+      { at:0, label:'LEVEL 01', name:'等待發芽的種子', description:'每一個小小的開始，都值得被溫柔對待。' },
+      { at:2, label:'LEVEL 02', name:'悄悄冒出新芽', description:'你已經跨出了第一步，小小的勇氣正在長大。' },
+      { at:4, label:'LEVEL 03', name:'努力伸展的綠葉', description:'看！昨天的堅持，正長成今天的力量。' },
+      { at:6, label:'LEVEL 04', name:'今天也盛開了', description:'你讓努力開成了一朵花。記得為自己鼓掌！' }
+    ];
+    const $ = id => document.getElementById(id);
+    const pad = n => String(n).padStart(2, '0');
+    const localDay = (d = new Date()) => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    const safeId = () => (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+    const newDay = () => ({ tasks: [], focusSessions: [] });
+    const defaultTimer = () => ({ mode: 'focus', focusMinutes: 25, durationSeconds: 1500, remainingSeconds: 1500, running: false, endAt: null });
+    const defaultState = () => ({ days: {}, timer: defaultTimer() });
+    function load() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(KEY));
+        if (!parsed || typeof parsed !== 'object' || !parsed.days || typeof parsed.days !== 'object') return defaultState();
+        const timer = parsed.timer && typeof parsed.timer === 'object' ? parsed.timer : defaultTimer();
+        return { days: parsed.days, timer: {
+          mode: timer.mode === 'break' ? 'break' : 'focus',
+          focusMinutes: [1,15,25,45].includes(Number(timer.focusMinutes)) ? Number(timer.focusMinutes) : 25,
+          durationSeconds: Number.isFinite(timer.durationSeconds) && timer.durationSeconds > 0 ? timer.durationSeconds : 1500,
+          remainingSeconds: Number.isFinite(timer.remainingSeconds) && timer.remainingSeconds >= 0 ? timer.remainingSeconds : 1500,
+          running: timer.running === true && Number.isFinite(timer.endAt),
+          endAt: Number.isFinite(timer.endAt) ? timer.endAt : null
+        }};
+      } catch (e) { return defaultState(); }
+    }
+    let state = load();
+    let activeFilter = 'all';
+    let selectedHistory = localDay();
+    let activeDay = localDay();
+    let toastTimeout;
+    function save() {
+      try { localStorage.setItem(KEY, JSON.stringify(state)); }
+      catch (e) { toast('此瀏覽器無法儲存資料，請檢查儲存空間或隱私設定。'); }
+    }
+    function getDay(day=localDay()) {
+      if (!state.days[day] || !Array.isArray(state.days[day].tasks) || !Array.isArray(state.days[day].focusSessions)) state.days[day] = newDay();
+      return state.days[day];
+    }
+    function sum(day) {
+      const all = getDay(day);
+      const done = all.tasks.filter(t => t.done).length;
+      const sessions = all.focusSessions.length;
+      const minutes = all.focusSessions.reduce((n,s) => n + (Number(s.minutes) || 0),0);
+      return { total: all.tasks.length, done, sessions, minutes, sun: done + sessions*2, percent: all.tasks.length ? Math.round(done/all.tasks.length*100) : 0 };
+    }
+    function toast(message) {
+      const el = $('toast');
+      el.textContent = message;
+      el.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => el.classList.remove('show'), 2800);
+    }
+    function confirmLeaveRunning() {
+      if (!state.timer.running && state.timer.remainingSeconds === state.timer.durationSeconds) return true;
+      return window.confirm('切換設定將重設這一輪計時，尚未完成的專注不會獲得陽光。確定嗎？');
+    }
+    function ensureToday() {
+      const today = localDay();
+      if (today !== activeDay) {
+        activeDay = today;
+        getDay(today);
+        selectedHistory = today;
+        renderAll();
+      }
+    }
+    function renderTasks() {
+      const day = getDay();
+      const info = sum(localDay());
+      $('tasksCount').textContent = `${info.total - info.done} 項待完成`;
+      $('progressText').textContent = `${info.done} / ${info.total} 項`;
+      $('taskProgressFill').style.width = `${info.percent}%`;
+      $('taskProgressBar').setAttribute('aria-valuenow', info.percent);
+      $('clearCompleted').disabled = info.done === 0;
+      document.querySelectorAll('[data-filter]').forEach(btn => {
+        const on = btn.dataset.filter === activeFilter;
+        btn.classList.toggle('active', on);
+        btn.setAttribute('aria-pressed', String(on));
+      });
+      const entries = day.tasks.filter(t => activeFilter === 'all' || (activeFilter === 'done' ? t.done : !t.done));
+      const list = $('taskList');
+      list.replaceChildren();
+      if (entries.length === 0) {
+        const li = document.createElement('li');
+        li.className = 'empty';
+        const messages = { all: '今天還沒有任務，種下第一個小目標吧。', todo: '太棒了！目前沒有未完成的任務。', done: '完成一項任務，這裡就會留下紀錄。' };
+        li.innerHTML = '<div class="empty-flower" aria-hidden="true">❀</div>';
+        li.append(document.createTextNode(messages[activeFilter]));
+        list.append(li);
+        return;
+      }
+      entries.forEach(task => {
+        const li = document.createElement('li');
+        li.className = 'task' + (task.done ? ' is-done' : '');
+        const toggle = document.createElement('button');
+        toggle.className = 'task-toggle'; toggle.type = 'button';
+        toggle.setAttribute('aria-label', task.done ? `取消完成：${task.text}` : `標記完成：${task.text}`);
+        toggle.title = task.done ? '取消完成' : '標記完成';
+        toggle.innerHTML = task.done ? '<svg width="15" height="15" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="m4 9 3 3 7-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '';
+        toggle.addEventListener('click', () => {
+          task.done = !task.done;
+          task.doneAt = task.done ? new Date().toISOString() : null;
+          save(); renderAll();
+          toast(task.done ? '完成一個小目標！☀ +1 陽光值' : '已取消完成，陽光值同步調整。');
+        });
+        const body = document.createElement('div'); body.className = 'task-body';
+        const title = document.createElement('span'); title.className = 'task-name'; title.textContent = task.text;
+        body.append(title);
+        const category = document.createElement('span'); category.className = 'task-category'; category.textContent = task.category || '其他';
+        const actions = document.createElement('div'); actions.className = 'task-actions';
+        const del = document.createElement('button'); del.type = 'button'; del.className = 'icon-btn';
+        del.title = '刪除任務'; del.setAttribute('aria-label', `刪除任務：${task.text}`);
+        del.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m5 4v7m4-7v7"/></svg>';
+        del.addEventListener('click', () => {
+          const idx = day.tasks.findIndex(t => t.id === task.id);
+          if (idx === -1) return;
+          day.tasks.splice(idx, 1);
+          save(); renderAll(); toast('已刪除任務。');
+        });
+        actions.append(del);
+        li.append(toggle, body, category, actions);
+        list.append(li);
+      });
+    }
+    function renderGarden() {
+      const info = sum(localDay());
+      let stage = 0;
+      for (let i=0; i<stages.length; i++) if (info.sun >= stages[i].at) stage = i;
+      document.querySelectorAll('.plant-stage').forEach(el => el.toggleAttribute('hidden', Number(el.dataset.stage) !== stage));
+      $('levelLabel').textContent = stages[stage].label;
+      $('levelName').textContent = stages[stage].name;
+      $('levelDescription').textContent = stages[stage].description;
+      $('sunNumber').textContent = String(info.sun);
+      $('sunFill').style.width = `${Math.min(100, info.sun/6*100)}%`;
+      $('sunRatio').textContent = `${info.sun} / 6`;
+      const need = [2,4,6][stage];
+      $('sunHint').textContent = stage === 3 ? '已盛開！繼續累積今天的成就' : `再收集 ${need - info.sun} 點陽光就能成長`;
+      $('statTasks').textContent = String(info.done);
+      $('statPercent').textContent = `${info.percent}%`;
+      $('statMinutes').textContent = String(info.minutes);
+      $('statSessions').textContent = String(info.sessions);
+    }
+    function previousDays(n=7) {
+      const result = [];
+      const date = new Date();
+      date.setHours(12,0,0,0);
+      for (let i=n-1; i>=0; i--) {
+        const d = new Date(date.getFullYear(), date.getMonth(), date.getDate()-i, 12);
+        result.push({ key:localDay(d), date:d });
+      }
+      return result;
+    }
+    function renderHistory() {
+      const days = previousDays();
+      const container = $('historyGrid'); container.replaceChildren();
+      days.forEach(({key,date}) => {
+        const summary = sum(key);
+        const btn = document.createElement('button'); btn.type='button';
+        btn.className = 'history-day' + (summary.sun > 0 ? ' has-activity' : '') + (selectedHistory === key ? ' selected' : '');
+        btn.setAttribute('aria-label', `${date.getMonth()+1}月${date.getDate()}日，${summary.done}項完成，${summary.minutes}分鐘專注`);
+        btn.setAttribute('aria-pressed', String(selectedHistory === key));
+        btn.innerHTML = `<span class="week">${['日','一','二','三','四','五','六'][date.getDay()]}</span><span class="day">${date.getDate()}</span><span class="mark" aria-hidden="true"></span>`;
+        btn.addEventListener('click', () => { selectedHistory = key; renderHistory(); });
+        container.append(btn);
+      });
+      const selected = days.find(d => d.key === selectedHistory) || days[6];
+      const s = sum(selected.key);
+      $('historyDetail').textContent = `${selected.date.getMonth()+1} 月 ${selected.date.getDate()} 日｜完成 ${s.done} / ${s.total} 項任務・專注 ${s.minutes} 分鐘（${s.sessions} 輪）・收集 ${s.sun} 點陽光`;
+    }
+    function renderAll() { renderTasks(); renderGarden(); renderHistory(); }
+    function resetTimer(mode=state.timer.mode,focusMinutes=state.timer.focusMinutes) {
+      const durationSeconds = mode === 'break' ? 5*60 : focusMinutes*60;
+      state.timer = { mode, focusMinutes, durationSeconds, remainingSeconds: durationSeconds, running:false, endAt:null };
+      save(); renderTimer();
+    }
+    function secondsRemaining() {
+      return state.timer.running ? Math.max(0, Math.ceil((state.timer.endAt - Date.now())/1000)) : state.timer.remainingSeconds;
+    }
+    function finishTimer() {
+      const wasFocus = state.timer.mode === 'focus';
+      const minutes = state.timer.durationSeconds / 60;
+      state.timer.running = false;
+      state.timer.endAt = null;
+      if (wasFocus) {
+        getDay().focusSessions.push({id:safeId(), minutes, finishedAt: new Date().toISOString()});
+        state.timer.mode = 'break'; state.timer.durationSeconds = 300; state.timer.remainingSeconds = 300;
+        toast(`完成 ${minutes} 分鐘專注！☀ +2 陽光值，現在可以休息 5 分鐘。`);
+      } else {
+        state.timer.mode = 'focus'; state.timer.durationSeconds = state.timer.focusMinutes * 60; state.timer.remainingSeconds = state.timer.durationSeconds;
+        toast('休息結束！準備好再開啟下一輪學習。');
+      }
+      save(); renderAll(); renderTimer();
+      document.title = 'Study Garden｜讓努力慢慢開花';
+    }
+    function tick() {
+      ensureToday();
+      if (state.timer.running && secondsRemaining() <= 0) { finishTimer(); return; }
+      renderTimer();
+    }
+    function renderTimer() {
+      const t = state.timer;
+      const seconds = secondsRemaining();
+      const display = `${pad(Math.floor(seconds/60))}:${pad(seconds%60)}`;
+      $('timerDisplay').textContent = display;
+      $('timerRing').style.setProperty('--progress', `${Math.max(0,seconds/t.durationSeconds*100)}%`);
+      $('timerRing').setAttribute('aria-label', `${modes[t.mode]}倒數剩餘 ${Math.floor(seconds/60)} 分 ${seconds%60} 秒`);
+      $('timerStateLabel').textContent = t.running ? (t.mode === 'focus' ? '正在專注，慢慢來' : '好好休息，放輕鬆') : (seconds < t.durationSeconds ? '已暫停，可以繼續' : '準備好就開始吧');
+      $('timerCaption').textContent = t.mode === 'focus' ? '每一分鐘的專注，都是成長的養分。' : '讓眼睛與心情休息一下，再重新出發。';
+      $('timerStart').textContent = t.running ? 'Ⅱ 暫停計時' : (seconds === t.durationSeconds ? (t.mode === 'focus' ? '▶ 開始專注' : '▶ 開始休息') : '▶ 繼續計時');
+      $('timerPresets').hidden = t.mode === 'break';
+      document.querySelectorAll('[data-mode]').forEach(btn => { const active = btn.dataset.mode === t.mode; btn.classList.toggle('active', active); btn.setAttribute('aria-pressed', String(active)); });
+      document.querySelectorAll('[data-minutes]').forEach(btn => { const active = Number(btn.dataset.minutes) === t.focusMinutes; btn.classList.toggle('selected',active); btn.setAttribute('aria-pressed', String(active)); });
+      document.title = t.running ? `${display}｜Study Garden` : 'Study Garden｜讓努力慢慢開花';
+    }
+    $('taskForm').addEventListener('submit', e => {
+      e.preventDefault();
+      ensureToday();
+      const input = $('taskInput'); const text = input.value.trim();
+      if (!text) return;
+      getDay().tasks.unshift({ id:safeId(), text, category:$('taskCategory').value, done:false, createdAt:new Date().toISOString(), doneAt:null });
+      input.value = ''; input.focus(); save(); renderAll(); toast('已把新目標種進今天的花園。');
+    });
+    document.querySelectorAll('[data-filter]').forEach(btn => btn.addEventListener('click', () => { activeFilter = btn.dataset.filter; renderTasks(); }));
+    $('clearCompleted').addEventListener('click', () => {
+      const day = getDay(); const count=day.tasks.filter(t=>t.done).length;
+      if (!count) return;
+      if (!window.confirm(`要清除 ${count} 項已完成任務嗎？相關的陽光值也會扣回。`)) return;
+      day.tasks=day.tasks.filter(t=>!t.done); save(); renderAll(); toast('已清除完成任務。');
+    });
+    $('timerStart').addEventListener('click', () => {
+      if (state.timer.running) {
+        state.timer.remainingSeconds=secondsRemaining(); state.timer.running=false; state.timer.endAt=null; toast('已暫停，想繼續時再回來。');
+      } else {
+        state.timer.running=true; state.timer.endAt=Date.now()+state.timer.remainingSeconds*1000;
+      }
+      save(); renderTimer();
+    });
+    $('timerReset').addEventListener('click', () => {
+      if (!confirmLeaveRunning()) return;
+      resetTimer(); toast('已重設計時器。');
+    });
+    document.querySelectorAll('[data-mode]').forEach(btn => btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      if (state.timer.mode === mode) return;
+      if (!confirmLeaveRunning()) return;
+      resetTimer(mode);
+    }));
+    document.querySelectorAll('[data-minutes]').forEach(btn => btn.addEventListener('click', () => {
+      const minutes=Number(btn.dataset.minutes);
+      if (state.timer.focusMinutes===minutes) return;
+      if (!confirmLeaveRunning()) return;
+      resetTimer('focus',minutes);
+    }));
+    $('exportData').addEventListener('click', () => {
+      const data = { exportedAt:new Date().toISOString(), app:'Study Garden', days:state.days };
+      const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
+      const url=URL.createObjectURL(blob); const a=document.createElement('a');
+      a.href=url; a.download=`study-garden-${localDay()}.json`;
+      document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+      toast('學習紀錄已匯出為 JSON 檔案。');
+    });
+    $('clearData').addEventListener('click', () => {
+      if (!window.confirm('確定清除所有日期的任務、番茄鐘紀錄與植物進度嗎？此動作無法復原。')) return;
+      state=defaultState();activeFilter='all';activeDay=localDay();selectedHistory=activeDay;save();renderAll();renderTimer();toast('已清除所有資料，可以重新開始種花。');
+    });
+    const now=new Date();
+    $('headerDate').textContent = `${now.getFullYear()} / ${pad(now.getMonth()+1)} / ${pad(now.getDate())}`;
+    const hour=now.getHours();
+    $('greeting').textContent = hour<11 ? '早安，把今天的美好慢慢種下 ♡' : hour<17 ? '午後也值得一個溫柔的開始 ♡' : '辛苦了，今天也為自己留一點時間 ♡';
+    getDay();
+    // 重新開啟頁面時，以實際結束時間結算正在進行的專注，避免重複發獎。
+    if (state.timer.running && secondsRemaining() <= 0) finishTimer();
+    renderAll();renderTimer();
+    setInterval(tick, 300);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) tick(); });
+  })();
+  </script>
+</body>
+</html>
